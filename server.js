@@ -1,28 +1,21 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const morgan = require('morgan');
-
-
-
+const db = require('./db');
 
 const app = express();
 
-const db = [
-  { id: 1, author: 'John Doe', text: 'This company is worth every coin!' },
-  { id: 2, author: 'Amanda Doe', text: 'They really know how to make you happy.' },
-];
-
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(morgan('dev'));
 
 app.get('/testimonials', (req, res) => {
-  res.json(db);
+  res.json(db.testimonials);
 });
 
 app.get('/testimonials/:id', (req, res) => {
   const testimonialId = parseInt(req.params.id);
-  const testimonial = db.find((item) => item.id === testimonialId);
+  const testimonial = db.testimonials.find((item) => item.id === testimonialId);
 
   if (testimonial) {
     res.json(testimonial);
@@ -30,8 +23,8 @@ app.get('/testimonials/:id', (req, res) => {
 });
 
 app.get('/testimonials/random', (req, res) => {
-  const randomIndex = Math.floor(Math.random() * db.length);
-  const randomTestimonial = db[randomIndex];
+  const randomIndex = Math.floor(Math.random() * db.testimonials.length);
+  const randomTestimonial = db.testimonials[randomIndex];
   
   res.json(randomTestimonial);
 });
@@ -43,21 +36,21 @@ app.post('/testimonials', (req, res) => {
     author, 
     text,
   };
-  db.push(newTestimonial);
-  res.status(201).json(newTestimonial)
+  db.testimonials.push(newTestimonial);
+  res.json({ message: 'ok!' });
 });
 
 app.put('/testimonials/:id', (req, res) => {
   const testimonialId = parseInt(req.params.id);
   const { author, text } = req.body;
 
-  const testimonial = db.find((item) => item.id === testimonialId);
+  const testimonial = db.testimonials.find((item) => item.id === testimonialId);
 
   if (testimonial) {
     testimonial.author = author;
     testimonial.text = text;
 
-    res.json(testimonial);
+    res.json({ message: 'ok!' });
   } else {
     res.status(404).send('Testimonial not found');
   }
@@ -65,18 +58,18 @@ app.put('/testimonials/:id', (req, res) => {
 
 app.delete('/testimonials/:id', (req, res) => {
   const testimonialId = parseInt(req.params.id);
-  const testimonialIndex = db.findIndex((item) => item.id === testimonialId);
+  const testimonialIndex = db.testimonials.findIndex((item) => item.id === testimonialId);
 
   if (testimonialIndex !== -1) {
-    db.splice(testimonialIndex, 1); // Usunięcie jednego elementu z tablicy na indeksie testimonialIndex
-    res.status(204).send('OK'); 
+    db.testimonials.splice(testimonialIndex, 1); // Usunięcie jednego elementu z tablicy na indeksie testimonialIndex
+    res.json({ message: 'ok!' }); 
   } else {
     res.status(404).send('Testimonial not found');
   }
 });
 
 app.use((req, res) => {
-  res.status(404).send('404 not found...');
+  res.status(404).json({ message: 'Not found...' });
 });
 
 app.listen(8000, () => {
