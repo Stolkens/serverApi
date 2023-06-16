@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const db = require('./db');
 
 const app = express();
@@ -11,6 +12,7 @@ const seatsRoutes = require('././routes/seats.routes');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(morgan('dev'));
+app.use(cors());
 app.use('/api', testimonialRoutes);
 app.use('/api', concertRoutes);
 app.use('/api', seatsRoutes);
