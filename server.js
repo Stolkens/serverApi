@@ -8,7 +8,6 @@ const testimonialRoutes = require('././routes/testimonials.routes');
 const concertRoutes = require('././routes/concerts.routes');
 const seatsRoutes = require('././routes/seats.routes');
 
-// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(morgan('dev'));
