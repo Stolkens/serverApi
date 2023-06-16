@@ -19,10 +19,11 @@ router.route('/seats/:id').get((req, res) => {
 });
 
 router.route('/seats').post ((req, res) => {
-  const {day, client, email } = req.body;
+  const {day, seat, client, email } = req.body;
   const newseat = {
     id: uuidv4(),
     day,
+    seat, 
     client, 
     email
   };
@@ -32,14 +33,15 @@ router.route('/seats').post ((req, res) => {
 
 router.route('/seats/:id').put ((req, res) => {
   const seatId = parseInt(req.params.id);
-  const { day, client, email } = req.body;
+  const { day, seat, client, email } = req.body;
 
-  const seat = db.seats.find((item) => item.id === seatId);
+  const seatData = db.seats.find((item) => item.id === seatId);
 
-  if (seat) {
-    seat.day = day;
-    seat.client = client;
-    seat.email = email;
+  if (seatData) {
+    seatData.day = day;
+    seatData.seat = seat;
+    seatData.client = client;
+    seatData.email = email;
     
     res.json({ message: 'ok!' });
   } else {
