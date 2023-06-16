@@ -20,15 +20,21 @@ router.route('/seats/:id').get((req, res) => {
 
 router.route('/seats').post ((req, res) => {
   const {day, seat, client, email } = req.body;
-  const newseat = {
+  const newSeat = {
     id: uuidv4(),
     day,
     seat, 
     client, 
     email
   };
-  db.seats.push(newseat);
-  res.json({ message: 'ok!' });
+  
+  if (db.seats.some(seat => seat.day === newSeat.day && seat.seat === newSeat.seat)){
+    res.json({ message: 'this seat is taken' });
+  }
+  else {
+    db.seats.push(newSeat);
+    res.json({ message: 'ok!' });
+  }
 });
 
 router.route('/seats/:id').put ((req, res) => {
