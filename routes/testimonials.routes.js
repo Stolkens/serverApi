@@ -9,6 +9,13 @@ router.route('/testimonials').get((req, res) => {
   res.json(db.testimonials);
 });
 
+router.route('/testimonials/random').get((req, res) => {
+  const randomIndex = Math.floor(Math.random() * db.testimonials.length);
+  const randomTestimonial = db.testimonials[randomIndex];
+  
+  res.json(randomTestimonial);
+});
+
 router.route('/testimonials/:id').get((req, res) => {
   const testimonialId = parseInt(req.params.id);
   const testimonial = db.testimonials.find((item) => item.id === testimonialId);
@@ -16,13 +23,6 @@ router.route('/testimonials/:id').get((req, res) => {
   if (testimonial) {
     res.json(testimonial);
   }
-});
-
-router.route('/testimonials/random').get((req, res) => {
-  const randomIndex = Math.floor(Math.random() * db.testimonials.length);
-  const randomTestimonial = db.testimonials[randomIndex];
-  
-  res.json(randomTestimonial);
 });
 
 router.route('/testimonials').post ((req, res) => {
