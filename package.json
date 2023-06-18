@@ -13,6 +13,8 @@
     "uuid": "^9.0.0"
   },
   "scripts": {
-    "start": "npx nodemon server.js"
+    "start": "run-p start:*" ,
+    "start:react": "cd client && npm run build",
+    "start:api": "nodemon server.js"
   }
 }
