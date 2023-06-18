@@ -9,9 +9,7 @@ import SeatChooser from './../SeatChooser/SeatChooser';
 const OrderTicketForm = () => {
   const dispatch = useDispatch();
   const requests = useSelector(getRequests);
-  console.log('requesty', requests);
 
-  
   useEffect(() => {
     const interval = setInterval(() => {  // refresh after each 2 min
       dispatch(loadSeatsRequest());
@@ -63,7 +61,6 @@ const OrderTicketForm = () => {
     } else {
       setIsError(true);
     }
-    console.log('order',order)
   }
 
   return (
