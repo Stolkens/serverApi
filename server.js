@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const db = require('./db');
 const path = require('path');
 
 const app = express();
@@ -10,6 +9,9 @@ const testimonialRoutes = require('././routes/testimonials.routes');
 const concertRoutes = require('././routes/concerts.routes');
 const seatsRoutes = require('././routes/seats.routes');
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '/client/build')));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(morgan('dev'));
@@ -17,8 +19,6 @@ app.use(cors());
 app.use('/api', testimonialRoutes);
 app.use('/api', concertRoutes);
 app.use('/api', seatsRoutes);
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '/client/build')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
