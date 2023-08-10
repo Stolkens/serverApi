@@ -10,13 +10,13 @@ const OrderTicketForm = () => {
   const dispatch = useDispatch();
   const requests = useSelector(getRequests);
 
-  useEffect(() => {
-    const interval = setInterval(() => {  // refresh after each 2 min
-      dispatch(loadSeatsRequest());
-    }, 120000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {  // refresh after each 2 min
+  //     dispatch(loadSeatsRequest());
+  //   }, 120000);
 
-    return () => clearInterval(interval); // cleanup
-  }, [dispatch]);
+  //   return () => clearInterval(interval); // cleanup
+  // }, [dispatch]);
 
   
   const [order, setOrder] = useState({
