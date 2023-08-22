@@ -3,6 +3,17 @@ const socket = require('socket.io');
 const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
+const mongoose = require('mongoose');
+
+
+mongoose.connect('mongodb://localhost:27017/newWaveDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+db.on('error', err => console.log('Error ' + err));
 
 const app = express();
 
