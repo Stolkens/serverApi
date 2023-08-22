@@ -6,7 +6,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 
-mongoose.connect('mongodb://localhost:27017/newWaveDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
